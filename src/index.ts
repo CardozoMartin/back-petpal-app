@@ -1,6 +1,8 @@
+
 import connectDB from "./database/databaseMongo"
 import dotenv from 'dotenv'
 import { Server } from "./server"
+import { container } from "tsyringe";
 
 const starServer = async()=>{
     //primeros antes de iniciar hacemos la conexion a la base de datos

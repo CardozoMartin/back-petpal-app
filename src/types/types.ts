@@ -8,6 +8,8 @@ export interface IUserData {
     _id: string;
     name: string;
     email: string;
+    isVerified?: boolean;
+    token?: string; // opcional para el token de verificación
     createdAt: Date;
     updatedAt?: Date;
 }
@@ -23,13 +25,49 @@ export interface IUserResponse {
     _id: string;
     name: string;
     email: string;
+    isVerified?: boolean;
     createdAt: Date;
     updatedAt?: Date;
 }
+//interfaz para la respuesta con contraseña del usuario
+export interface IUserResponseWithPassword extends IUserData {
+    password: string;
+}
 
+//Respuestas para las mascotas
+export interface IPetCreate{
+    name: string;
+    tipo: string;
+    breed: string;
+    age: number;
+    address: string;
+    phone: string;
+    photo?: string; 
+    idUser: string; // ID del usuario propietario
+}
 
-//Respuestas para los controladores
+export interface IPetUpdate {
+    name?: string;
+    tipo?: string;
+    breed?: string;
+    age?: number;
+    address?: string;
+    phone?: string;
+    photo?: string;
+    idUser?: string;
+}
 
+export interface IPetResponse {
+    _id: string;
+    name: string;
+    tipo: string;
+    breed: string;
+    age: number;
+    address: string;
+    phone: string;
+    photo?: string;
+    idUser: string;
+}
 
 //interfaz base para todas las respuestas
 export interface IBaseApiResponse {

@@ -1,6 +1,8 @@
 import express, { Application } from "express";
 import cors from 'cors'
 import  userRoutes  from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
+import petRouter from "./routes/pet.routes";
 
 export class Server {
     //vamos a colocar nuestras variables
@@ -30,7 +32,9 @@ export class Server {
     }
     //aqui vamos a poner las rutas
     routes() {
+        this.app.use('/api/auth', authRoutes)
         this.app.use('/api/user', userRoutes);
+        this.app.use('/api/pet', petRouter);
     }
 
     //iniciamos el servidor

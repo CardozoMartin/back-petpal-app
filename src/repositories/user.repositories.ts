@@ -1,6 +1,8 @@
 import { IUserRepository } from "../interface/user.interface";
 import User, { IUser } from "../models/user.model";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class UserRepository implements IUserRepository {
     async createUser(dataUser: Partial<IUser>): Promise<IUser> {
         try {
@@ -47,8 +49,21 @@ export class UserRepository implements IUserRepository {
             throw new Error("Error al obtener el usuario");
         }
     }
-    async getUserByEmail(email: string): Promise<IUser | null> {
-        return await User.findOne({ email: email.toLowerCase() }); // Retorna IUser | null
+   async getUserByEmail(email: string): Promise<IUser | null> {
+        try {
+            return await User.findOne({ email: email.toLowerCase() });
+        } catch (error) {
+            throw new Error("Error al buscar usuario por email");
+        }
+    }
+
+    // ✅ Nuevo método para buscar por token de verificación
+    async getUserByVerificationToken(token: string): Promise<IUser | null> {
+        try {
+            return await User.findOne({ verificationToken: token });
+        } catch (error) {
+            throw new Error("Error al buscar usuario por token de verificación");
+        }
     }
 }
 
