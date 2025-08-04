@@ -33,6 +33,54 @@ export interface IUserResponse {
 export interface IUserResponseWithPassword extends IUserData {
     password: string;
 }
+//interfaz para reporte de mascotas perdidas, encontradas en adopcion o que buscan transito
+export interface IReportPetResponse {
+    _id: string;
+    namePet:string;
+    tipoPet:string;
+    breed:string;
+    age:number;
+    sex:string;
+    size:string;
+    descriptionPet:string;
+    address:string;
+    date: string;
+    descriptionAddres:string;
+    photo?: string;
+    numberContact:string;
+    nameUser:string;
+}
+export interface IReportPetCreate {
+    namePet: string;
+    tipoPet: string;
+    breed: string;
+    age: number;
+    sex: string;
+    size: string;
+    description: string;
+    address: string;
+    date: string;
+    descriptionPet: string;
+    photo?: string;
+    numberContact: string;
+    nameUser: string;
+}
+
+export interface IReportPetUpdate {
+    namePet?: string;
+    tipoPet?: string;
+    breed?: string;
+    age?: number;
+    sex?: string;
+    size?: string;
+    description?: string;
+    address?: string;
+    date?: string;
+    descriptionPet?: string;
+    photo?: string;
+    numberContact?: string;
+    nameUser?: string;
+}
 
 //Respuestas para las mascotas
 export interface IPetCreate{

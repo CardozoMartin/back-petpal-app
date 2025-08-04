@@ -1,8 +1,9 @@
 import express, { Application } from "express";
 import cors from 'cors'
-import  userRoutes  from "./routes/user.routes";
+import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import petRouter from "./routes/pet.routes";
+import petReportRouter from './routes/pet.reports.route'
 
 export class Server {
     //vamos a colocar nuestras variables
@@ -16,6 +17,7 @@ export class Server {
         this.middlewares();
         this.routes();
     }
+    
     //configuramos los middlewares
     middlewares() {
         this.app.use(cors({
@@ -30,11 +32,14 @@ export class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
     }
+
+
     //aqui vamos a poner las rutas
     routes() {
-        this.app.use('/api/auth', authRoutes)
+        this.app.use('/api/auth', authRoutes);
         this.app.use('/api/user', userRoutes);
         this.app.use('/api/pet', petRouter);
+        this.app.use('/api/report', petReportRouter);
     }
 
     //iniciamos el servidor
