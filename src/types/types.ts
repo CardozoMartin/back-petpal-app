@@ -45,7 +45,6 @@ export interface IReportPetResponse {
     descriptionPet:string;
     address:string;
     date: string;
-    descriptionAddres:string;
     photo?: string;
     numberContact:string;
     nameUser:string;
@@ -57,7 +56,6 @@ export interface IReportPetCreate {
     age: number;
     sex: string;
     size: string;
-    description: string;
     address: string;
     date: string;
     descriptionPet: string;
@@ -73,7 +71,6 @@ export interface IReportPetUpdate {
     age?: number;
     sex?: string;
     size?: string;
-    description?: string;
     address?: string;
     date?: string;
     descriptionPet?: string;

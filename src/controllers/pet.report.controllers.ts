@@ -3,7 +3,7 @@ import { PetReportService } from "../services/pet.report.service";
 import { IErrorResponse, IReportPetCreate, IReportPetResponse, ISuccessResponse } from "../types/types";
 import { Request, } from "express";
 
-
+@injectable()
 export class ReportPetController {
 
   constructor(private reportPetSerivce: PetReportService) { }
@@ -108,23 +108,10 @@ export class ReportPetController {
 
   //controlador para crear un reporte
   async postReportPet(req: Request, res: Response): Promise<Response> {
-    //obtenemos los datos del body
-    const reportData: IReportPetCreate = req.body
-    //obtenemos la imange
-    const photoBuffer = req.file?.buffer;
-
     try {
-      //creamos el reporte
+      const reportData: IReportPetCreate = req.body
+      const photoBuffer = req.file?.buffer;
       const report = await this.reportPetSerivce.serviceCreatePetReport(reportData, photoBuffer)
-      //si ocurre algun error
-      if (!report) {
-        const errorResponse: IErrorResponse = {
-          success: false,
-          error: "Error al crear el reporte de mascota",
-          timestamp: new Date()
-        };
-        return res.status(500).json(errorResponse);
-      }
       //sitodo sale bien
       const successResponse: ISuccessResponse<IReportPetResponse> = {
         success: true,
@@ -133,9 +120,10 @@ export class ReportPetController {
       };
       return res.status(201).json(successResponse);
     } catch (error) {
+      console.error("❌ Error completo:", error); // ← Agregar este log
       const errorResponse: IErrorResponse = {
         success: false,
-        error: "Error al crear el reporte de mascota",
+        error: error.message || "Error al crear el reporte de mascota", // ← Mostrar error específico
         timestamp: new Date()
       };
       return res.status(500).json(errorResponse);

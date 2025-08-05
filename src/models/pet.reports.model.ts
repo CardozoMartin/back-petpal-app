@@ -9,7 +9,6 @@ export interface IPetReportDocument extends Document {
   age: number;
   sex: string;
   size: string;
-  description: string;
   address: string;
   date: string;
   descriptionPet: string;
@@ -51,11 +50,6 @@ const PetReportSchema: Schema = new Schema({
     type: String,
     required: [true, 'El tamaño de la mascota es requerido'],
     enum: ['pequeño', 'mediano', 'grande'],
-    trim: true
-  },
-  description: {
-    type: String,
-    required: [true, 'La descripción de la mascota es requerida'],
     trim: true
   },
   address: {

@@ -80,7 +80,6 @@ export class UserService {
             throw new Error("Error al crear el usuario");
         }
     }
-
     //servicio para verificar la cuenta del usuario
     async serviceVerifyAccount(token: string): Promise<boolean> {
         try {

@@ -45,7 +45,7 @@ export class PetReportRepository implements PetReportInterface {
       await report.save();
       return report;
     } catch (error) {
-      throw new Error("Error al crear el reporte de mascota");
+      throw error; // ← Lanzar el error original, no uno genérico
     }
   }
 

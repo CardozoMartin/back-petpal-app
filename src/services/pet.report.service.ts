@@ -12,7 +12,7 @@ export class PetReportService {
   private toPetReportResponse(pet: any): IReportPetResponse {
     return {
       _id: pet._id.toString(),
-      namePet: pet.name,
+      namePet: pet.namePet,
       tipoPet: pet.tipoPet,
       breed: pet.breed,
       age: pet.age,
@@ -21,7 +21,6 @@ export class PetReportService {
       descriptionPet: pet.descriptionPet,
       address: pet.address,
       date: pet.date,
-      descriptionAddres: pet.descriptionAddres,
       photo: pet.photo,
       numberContact: pet.numberContact,
       nameUser: pet.nameUser
@@ -48,7 +47,6 @@ export class PetReportService {
   async serviceCreatePetReport(data: IReportPetCreate, photoBuffer?: Buffer): Promise<IReportPetResponse> {
     try {
       let photoUrl = '';
-
       //si hay una imagen, subirla a cloudinary
       if (photoBuffer) {
         photoUrl = await this.uploadImageToCloudinary(photoBuffer);
@@ -56,11 +54,11 @@ export class PetReportService {
       //creamos el reporte de la mascota con la URK de la imagen
       const petReportData = { ...data, photo: photoUrl };
       //guardamos la mascota 
-      const petSave = await this.petReportRepository.createPetReport(data)
+      const petSave = await this.petReportRepository.createPetReport(petReportData)
 
-      return this.toPetReportResponse(data);
+      return this.toPetReportResponse(petSave);
     } catch (error) {
-      throw new Error("Error al crear el reporte de mascota");
+      throw error; // ← Lanzar el error original, no uno genérico
     }
   }
   //servicio para obtener todas los reportes
