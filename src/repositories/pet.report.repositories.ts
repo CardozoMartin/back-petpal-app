@@ -29,14 +29,14 @@ export class PetReportRepository implements PetReportInterface {
   }
 
   //repository para obtener todos los reportes de mascotas por id de usuario
-  async getAllPetReportsByUserId(userId: string): Promise<IPetReportDocument[]> {
-    try {
-      const reports = await PetReportModel.find({ userId });
-      return reports;
-    } catch (error) {
-      throw new Error("Error al obtener los reportes de mascotas del usuario");
-    }
+async getAllPetReportsByUserId(userId: string): Promise<IPetReportDocument[]> {
+  try {
+    const reports = await PetReportModel.find({ userId });
+    return reports;
+  } catch (error) {
+    throw new Error("Error al obtener los reportes de mascotas del usuario");
   }
+}
 
   //repository para crear un reporte de mascota
   async createPetReport(dataPetReport: IReportPetCreate): Promise<IPetReportDocument> {

@@ -7,20 +7,23 @@ import validacionMiddleware from '../middlewares/validate.schema';
 import postPetReportSchema from '../utils/postPetReportSchema';
 
 const router: Router = Router();
-const reportController = container.resolve(ReportPetController)
+const reportController = container.resolve(ReportPetController);
 
-
-//rutas para obtener datos
+// Rutas para obtener datos
 router.get('/', reportController.getAllPetReports.bind(reportController));
-router.get('/user/:userId', reportController.getPetReportByIdForUser.bind(reportController))
+router.get('/user/:userId', reportController.getPetReportByIdForUser.bind(reportController));
 router.get('/:id', reportController.getPetReportById.bind(reportController));
-//rutas para crear un reporte
-router.post('/create/', validacionMiddleware.validacionSchema(postPetReportSchema),
+
+// Rutas para crear un reporte
+router.post('/create/', 
   upload.single('photo'),
-  reportController.postReportPet.bind(reportController));
-//rutas para editar un reprote
+  reportController.postReportPet.bind(reportController)
+);
+
+// Rutas para editar un reporte
 router.put('/update/:id', reportController.putReportPet.bind(reportController));
-//rutas para eliminar un reporte
+
+// Rutas para eliminar un reporte
 router.delete('/delete/:id', reportController.deletePetReport.bind(reportController));
 
 export default router;

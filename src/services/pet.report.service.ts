@@ -23,7 +23,10 @@ export class PetReportService {
       date: pet.date,
       photo: pet.photo,
       numberContact: pet.numberContact,
-      nameUser: pet.nameUser
+      user: pet.user,
+      tipeReport: pet.tipeReport,
+      status: pet.status || false,
+      userId: pet.userId
     }
   }
   private async uploadImageToCloudinary(buffer: Buffer): Promise<string> {
@@ -128,18 +131,24 @@ export class PetReportService {
     }
   }
   //servicio para buscar todos los reportes que hizo un usuarip
-  async serviceReporteGetAllUserById(userId: string): Promise<IReportPetResponse[]> {
-    try {
-      //obtenemos todos los reportes
-      const getAllReports = await this.petReportRepository.getAllPetReportsByUserId(userId);
-      //verificamos que los reportes existan o el id
-      if (!getAllReports) {
-        throw new Error("No se encontraron reportes para este usuario");
-      }
-      //si los reportes existen devolvemos con las respuesta que tenemos creadas
-      return getAllReports.map(report => this.toPetReportResponse(report));
-    } catch (error) {
-      throw new Error("Error al obtener los reportes de mascotas del usuario");
+ async serviceReporteGetAllUserById(userId: string): Promise<IReportPetResponse[]> {
+  try {
+    console.log('id en el servicio', userId);
+    
+    // Obtenemos todos los reportes
+    const getAllReports = await this.petReportRepository.getAllPetReportsByUserId(userId);
+    console.log("🚀 ~ PetReportService ~ serviceReporteGetAllUserById ~ getAllReports:", getAllReports);
+    
+    // CORRECCIÓN: Verificamos que el array tenga elementos
+    if (!getAllReports || getAllReports.length === 0) {
+      throw new Error("No se encontraron reportes para este usuario");
     }
+    
+    // Si los reportes existen, devolvemos con las respuestas que tenemos creadas
+    return getAllReports.map(report => this.toPetReportResponse(report));
+  } catch (error) {
+    // Re-lanzamos el error para que sea manejado por el controlador
+    throw error;
   }
+}
 }

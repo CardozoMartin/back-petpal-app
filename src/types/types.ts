@@ -34,38 +34,46 @@ export interface IUserResponseWithPassword extends IUserData {
     password: string;
 }
 //interfaz para reporte de mascotas perdidas, encontradas en adopcion o que buscan transito
-export interface IReportPetResponse {
-    _id: string;
-    namePet:string;
-    tipoPet:string;
-    breed:string;
-    age:number;
-    sex:string;
-    size:string;
-    descriptionPet:string;
-    address:string;
-    date: string;
-    photo?: string;
-    numberContact:string;
-    nameUser:string;
-}
 export interface IReportPetCreate {
-    namePet: string;
+    tipeReport: string; // ✅ Agregar este campo que faltaba
+    namePet: string;    // ✅ Cambiar de petName a namePet
     tipoPet: string;
     breed: string;
     age: number;
     sex: string;
     size: string;
     address: string;
-    date: string;
+    date?: string;      // ✅ Hacer opcional ya que no siempre se envía
     descriptionPet: string;
     photo?: string;
     numberContact: string;
-    nameUser: string;
+    user: Array<{ id: string; name: string, email: string, phone: string, photo?: string }>;
+    status?: boolean;
+    userId: string
+}
+
+export interface IReportPetResponse {
+    _id: string;
+    tipeReport: string; // ✅ Agregar este campo que faltaba
+    namePet: string;    // ✅ Cambiar de petName a namePet
+    tipoPet: string;
+    breed: string;
+    age: number;
+    sex: string;
+    size: string;
+    descriptionPet: string;
+    address: string;
+    date?: string;      // ✅ Hacer opcional
+    photo?: string;
+    numberContact: string;
+    user: Array<{ id: string; name: string, email: string, phone: string, photo?: string }>;
+    status?: boolean;
+    userId: string
 }
 
 export interface IReportPetUpdate {
-    namePet?: string;
+    tipeReport?: string; // ✅ Agregar este campo que faltaba
+    namePet?: string;    // ✅ Cambiar de petName a namePet
     tipoPet?: string;
     breed?: string;
     age?: number;
@@ -76,18 +84,19 @@ export interface IReportPetUpdate {
     descriptionPet?: string;
     photo?: string;
     numberContact?: string;
-    nameUser?: string;
+    user?: Array<{ id: string; name: string, email: string, phone: string, photo?: string }>;
+    status?: boolean;
 }
 
 //Respuestas para las mascotas
-export interface IPetCreate{
+export interface IPetCreate {
     name: string;
     tipo: string;
     breed: string;
     age: number;
     address: string;
     phone: string;
-    photo?: string; 
+    photo?: string;
     idUser: string; // ID del usuario propietario
 }
 
@@ -124,7 +133,7 @@ export interface IBaseApiResponse {
 // Respuesta de éxito genérica
 export interface ISuccessResponse<T> extends IBaseApiResponse {
     data: T;
-    success:true;
+    success: true;
 }
 // Respuesta de error genérica
 export interface IErrorResponse extends IBaseApiResponse {

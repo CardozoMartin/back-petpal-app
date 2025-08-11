@@ -6,26 +6,26 @@ class validacionMiddleware {
     static validacionSchema(schema: Schema) {
         return (req: Request, res: Response, next: NextFunction): void => {
             const { error, value } = schema.validate(req.body, {
-                abortEarly: false, // Para que retorne todos los errores
-                allowUnknown: true, // Para permitir campos desconocidos
-                stripUnknown: true // Para eliminar campos desconocidos del objeto validado
+                abortEarly: false,
+                allowUnknown: true,
+                stripUnknown: true
             });
-            
+
             // Muestra todos los errores que puedan tener
             if (error) {
                 const errores = error.details.map(detalle => ({
                     campo: detalle.path.join('.'),
-                    mensaje: detalle.message // Era "mensaje" pero debe ser "message"
+                    mensaje: detalle.message
                 }));
-                
+
                 res.status(400).json({
                     error: "Error de validacion",
                     detalles: errores
                 });
                 return;
-                // Este return está de más, ya que hay un return arriba
+
             }
-            
+
             req.body = value;
             next();
         };
